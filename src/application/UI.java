@@ -1,13 +1,16 @@
 package application;
 
-import boardgame.Position;
-import chess.ChessPiece;
+
+import chess.ChessMatch;
+import chess.pieces.ChessPiece;
 import chess.ChessPosition;
 import chess.enums.Color;
 
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class UI {
 
@@ -67,6 +70,29 @@ public class UI {
         }
         System.out.print("  a b c d e f g h");
     }
+
+    public static void printMatch(ChessMatch chess) {
+        System.out.println();
+        System.out.println("Turn: " + chess.getTurn());
+        System.out.println("Player: " + chess.getCurrentPlayer());
+       printCapturedPieces(chess.getCapturedPieces());
+    }
+    public static void printCapturedPieces(List<ChessPiece> captured) {
+        List<ChessPiece> white
+                = captured
+                .stream()
+                .filter(p -> p.getColor() == Color.WHITE)
+                .collect(Collectors.toList());
+
+        List<ChessPiece> black
+                = captured.stream()
+                .filter(p -> p.getColor() == Color.BLACK)
+                .collect(Collectors.toList());
+        System.out.println("Captured Pieces: ");
+        System.out.println(ANSI_WHITE + "White: " + "[ " + white + " ]" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW+ "Black: " + "[ " + black + " ]" + ANSI_RESET);
+    }
+
 
     private static void printPiece(ChessPiece piece, boolean background) {
         if (background) {
