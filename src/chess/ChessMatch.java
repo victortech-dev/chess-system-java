@@ -105,6 +105,8 @@ public class ChessMatch {
         board.placePiece(p, source);
         if (capturedPiece != null) {
             board.placePiece(capturedPiece, target);
+            capturedPieces.remove(capturedPiece);
+            piecesOnTheBoard.add(capturedPiece);
 
         }
     }
@@ -115,7 +117,10 @@ public class ChessMatch {
     }
 
     private King king(Color color) {
-        return (King) piecesOnTheBoard.stream().filter(p -> p instanceof King && ((ChessPiece) p).getColor() == color).findFirst().get();
+        return (King) piecesOnTheBoard.stream()
+                .filter(p -> p instanceof King && ((ChessPiece) p)
+                        .getColor() == color).findFirst()
+                .orElseThrow(() -> new IllegalStateException("There is no " + color + " king on the board"));
     }
 
     private boolean testCheck(Color color) {
