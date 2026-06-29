@@ -75,14 +75,16 @@ public class UI {
         System.out.println();
         System.out.println("Turn: " + chess.getTurn());
         System.out.println("Player: " + chess.getCurrentPlayer());
+        if (chess.isCheck()){
+            System.out.println("CHECK!");
+        }
        printCapturedPieces(chess.getCapturedPieces());
     }
     public static void printCapturedPieces(List<ChessPiece> captured) {
         List<ChessPiece> white
                 = captured
                 .stream()
-                .filter(p -> p.getColor() == Color.WHITE)
-                .collect(Collectors.toList());
+                .filter(p -> p.getColor() == Color.WHITE).collect(Collectors.toList());
 
         List<ChessPiece> black
                 = captured.stream()
@@ -109,5 +111,7 @@ public class UI {
         }
         System.out.print(" ");
     }
+
+
 
 }

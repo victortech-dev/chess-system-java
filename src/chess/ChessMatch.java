@@ -13,16 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static application.UI.*;
-
 public class ChessMatch {
 
     private final Board board;
     private int turn;
     private Color currentPlayer;
+    private boolean check = false;
 
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
+
+    public boolean isCheck() {
+        return check;
+    }
 
     public ChessMatch() {
         turn = 1;
@@ -64,7 +67,12 @@ public class ChessMatch {
         validateSourcePosition(source);
         validateTargetPosition(source, target);
         Piece capturedPiece = makeMove(source, target);
+        if (testCheck(currentPlayer)) {
+            undoMove(source, target, capturedPiece);
+            throw new ChessException("You can't put yourself in check");
+        }
         nextTurn();
+        check = testCheck(currentPlayer);
         return (ChessPiece) capturedPiece;
     }
 
@@ -91,6 +99,39 @@ public class ChessMatch {
         }
         return capturedPiece;
     }
+
+    private void undoMove(Position source, Position target, Piece capturedPiece) {
+        Piece p = board.removePiece(target);
+        board.placePiece(p, source);
+        if (capturedPiece != null) {
+            board.placePiece(capturedPiece, target);
+
+        }
+    }
+
+    private Color opponent(Color color) {
+        return (color == Color.WHITE) ? Color.BLACK : Color.WHITE;
+
+    }
+
+    private King king(Color color) {
+        return (King) piecesOnTheBoard.stream().filter(p -> p instanceof King && ((ChessPiece) p).getColor() == color).findFirst().get();
+    }
+
+    private boolean testCheck(Color color) {
+        Position positionKing = king(color).getPosition();
+        List<Piece> opponentPieces =
+                piecesOnTheBoard.stream()
+                        .filter(p -> ((ChessPiece) p).getColor() == opponent(color))
+                        .collect(Collectors.toList());
+        for (Piece p : opponentPieces) {
+            if (p.possibleMove(positionKing)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     private void validateSourcePosition(Position position) {
         if (!board.thereIsApiece(position)) {
