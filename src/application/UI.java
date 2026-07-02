@@ -73,13 +73,20 @@ public class UI {
 
     public static void printMatch(ChessMatch chess) {
         System.out.println();
-        System.out.println("Turn: " + chess.getTurn());
-        System.out.println("Player: " + chess.getCurrentPlayer());
-        if (chess.isCheck()){
-            System.out.println("CHECK!");
+
+        if (!chess.isCheckMate()) {
+            System.out.println("Turn: " + chess.getTurn());
+            System.out.println("Player: " + chess.getCurrentPlayer());
+            if (chess.isCheck()) {
+                System.out.println("CHECK!");
+            }
+        }  else {
+            System.out.println("CHECK-MATE!");
+            System.out.println("Winner: " + chess.getCurrentPlayer());
         }
-       printCapturedPieces(chess.getCapturedPieces());
+        printCapturedPieces(chess.getCapturedPieces());
     }
+
     public static void printCapturedPieces(List<ChessPiece> captured) {
         List<ChessPiece> white
                 = captured
@@ -92,7 +99,7 @@ public class UI {
                 .collect(Collectors.toList());
         System.out.println("Captured Pieces: ");
         System.out.println(ANSI_WHITE + "White: " + "[ " + white + " ]" + ANSI_RESET);
-        System.out.println(ANSI_YELLOW+ "Black: " + "[ " + black + " ]" + ANSI_RESET);
+        System.out.println(ANSI_YELLOW + "Black: " + "[ " + black + " ]" + ANSI_RESET);
     }
 
 
@@ -111,7 +118,6 @@ public class UI {
         }
         System.out.print(" ");
     }
-
 
 
 }
