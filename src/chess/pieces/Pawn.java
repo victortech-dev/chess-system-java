@@ -5,9 +5,10 @@ import boardgame.Board;
 
 import boardgame.Position;
 
+import chess.ChessPiece;
 import chess.enums.Color;
 
-public class Pawn extends ChessPiece{
+public class Pawn extends ChessPiece {
 
 
     public Pawn(Board board, Color color) {

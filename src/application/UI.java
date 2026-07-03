@@ -2,7 +2,7 @@ package application;
 
 
 import chess.ChessMatch;
-import chess.pieces.ChessPiece;
+import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.enums.Color;
 

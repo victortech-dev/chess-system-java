@@ -1,9 +1,8 @@
-package chess.pieces;
+package chess;
 
 import boardgame.Board;
 import boardgame.Piece;
 import boardgame.Position;
-import chess.ChessPosition;
 import chess.enums.Color;
 
 public abstract class ChessPiece extends Piece {
