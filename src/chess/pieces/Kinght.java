@@ -58,7 +58,6 @@ public class Kinght extends ChessPiece {
             mat[p.getRow()][p.getColumn()] = true;
 
         }
-
         return mat;
 
 
