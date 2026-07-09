@@ -26,10 +26,14 @@ public class Program {
                 UI.printBoard(chessMatch.getPieces(), possibleMoves);
                 System.out.println();
                 System.out.print("Target:");
-
-
                 ChessPosition target = UI.readChessPosition(sc);
                 ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+                if (chessMatch.getPromoted() != null) {
+                    System.out.println("Congratulaition your piece promoted");
+                    System.out.println("Enter Piece : Q,N,B,R");
+                    String piece = sc.nextLine();
+                    chessMatch.replacePromoted(piece);
+                }
             } catch (ChessException e) {
                 System.out.println(e.getMessage());
                 sc.nextLine();

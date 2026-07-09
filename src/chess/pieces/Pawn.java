@@ -59,40 +59,36 @@ public class Pawn extends ChessPiece {
             if (getBoard().positionExists(p) && isThereOpponentPiece(p)) {
                 mat[p.getRow()][p.getColumn()] = true;
             }
-
         }
-
         if (getColor() == Color.WHITE) {
-
-            Position left = new Position(position.getRow(), position.getColumn() - 1);
-            Position ritgth = new Position(position.getRow(), position.getColumn() + 1);
-            if (getBoard().positionExists(left)) {
+            Position enPassantleft = new Position(position.getRow() - 1, position.getColumn() - 1);
+            Position enPassantRitgth = new Position(position.getRow() - 1, position.getColumn() + 1);
+            if (getBoard().positionExists(enPassantleft)) {
                 if (getBoard().piece(position.getRow(), position.getColumn() - 1) == chessMatch.getEnPassantVullnerable()) {
                     mat[position.getRow() - 1][position.getColumn() - 1] = true;
                 }
             }
-
-            if (getBoard().positionExists(ritgth)) {
+            if (getBoard().positionExists(enPassantRitgth)) {
                 if (getBoard().piece(position.getRow(), position.getColumn() + 1) == chessMatch.getEnPassantVullnerable()) {
                     mat[position.getRow() - 1][position.getColumn() + 1] = true;
                 }
             }
         } else {
-            Position left = new Position(position.getRow(), position.getColumn() - 1);
-            Position ritgth = new Position(position.getRow(), position.getColumn() + 1);
-            if (getBoard().positionExists(left)) {
-                if ( getBoard().piece(position.getRow(), position.getColumn() - 1) == chessMatch.getEnPassantVullnerable()) {
+            Position enPassantleft = new Position(position.getRow() + 1, position.getColumn() - 1);
+
+            Position enPassantRitgth = new Position(position.getRow() + 1, position.getColumn() + 1);
+            if (getBoard().positionExists(enPassantleft)) {
+                if (getBoard().piece(position.getRow(), position.getColumn() - 1) == chessMatch.getEnPassantVullnerable()) {
                     mat[position.getRow() + 1][position.getColumn() - 1] = true;
                 }
             }
-            if (getBoard().positionExists(ritgth)) {
-                if ( getBoard().piece(position.getRow(), position.getColumn() + 1) == chessMatch.getEnPassantVullnerable()) {
+            if (getBoard().positionExists(enPassantRitgth)) {
+                if (getBoard().piece(position.getRow(), position.getColumn() + 1) == chessMatch.getEnPassantVullnerable()) { 
                     mat[position.getRow() + 1][position.getColumn() + 1] = true;
                 }
             }
         }
         return mat;
-
     }
 
     @Override
